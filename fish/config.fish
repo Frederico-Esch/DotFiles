@@ -5,6 +5,7 @@ end
 set fish_greeting
 
 ufetch-arco | lolcat
+bass source /home/frederico/intel/oneapi/setvars.sh >> /dev/null
 
 alias lti="leftwm-theme install"
 alias ltu="leftwm-theme uninstall"
@@ -17,6 +18,5 @@ alias update='sudo pacman -Syyu'
 
 alias wget="wget -c"
 alias grep='grep --color=auto'
-alias clear='clear && ufetch-arco | lolcat'
 
 alias ll='ls -all'
