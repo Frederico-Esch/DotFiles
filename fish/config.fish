@@ -1,0 +1,1 @@
+/home/frederico/.config/fish/config.fish
