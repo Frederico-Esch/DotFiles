@@ -236,22 +236,6 @@ version = "0.0.2"
 leftwm_versions = "^0.3.0"
 current = false
 
-[[repos.themes]]
-name = "Desire"
-repository = "https://github.com/copypasteonly/Desire"
-commit = "*"
-version = "0.1"
-leftwm_versions = "^0.4.0"
-current = false
-
-[[repos.themes]]
-name = "Blood-Moon"
-repository = "https://github.com/zawesomekid/Blood-Moon-leftwm-theme"
-commit = "*"
-version = "0.0.1"
-leftwm_versions = ">0.3.0"
-current = false
-
 [[repos]]
 url = "localhost"
 name = "LOCAL"
@@ -259,15 +243,8 @@ definitions_version = 0
 
 [[repos.themes]]
 name = "candy"
-version = "0.0.0"
-leftwm_versions = "*"
-current = true
-
-[[repos.themes]]
-name = "smooth-custom"
-directory = "/home/frederico/.config/leftwm/themes/smooth-custom"
-version = "0.0.0"
-leftwm_versions = "*"
+version = "3.1.1"
+leftwm_versions = ">=0.3.0"
 current = true
 
 [[repos]]
@@ -317,7 +294,6 @@ current = false
 
 [[repos.themes]]
 name = "parker"
-directory = "/home/frederico/.config/leftwm/themes/parker"
 repository = "https://github.com/arcolinux/arcolinux-leftwm-theme-parker/"
 commit = "*"
 version = "3.1.1"
@@ -358,7 +334,6 @@ current = false
 
 [[repos.themes]]
 name = "smooth"
-directory = "/home/frederico/.config/leftwm/themes/smooth"
 repository = "https://github.com/arcolinux/arcolinux-leftwm-theme-smooth/"
 commit = "*"
 version = "3.1.1"

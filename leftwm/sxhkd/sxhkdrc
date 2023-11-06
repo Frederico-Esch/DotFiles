@@ -72,15 +72,11 @@ super + c
 
 #Htop
 super + h
-    urxvt -e htop
+    #alacritty -e htop
 
 #Rofi theme selector
 super + r
     rofi-theme-selector
-
-#Urxvt
-super + t
-    urxvt
 
 #Pavucontrol
 super + v
@@ -90,10 +86,6 @@ super + v
 super + m
     pragha
 
-#urxvt
-super + Return
-    urxvt
-
 #Xkill
 super + Escape
     xkill
@@ -101,7 +93,7 @@ super + Escape
 #Keyboard dependent
 #urxvt
 super + KP_Enter
-	urxvt
+	kitty
 
 #################################################################
 # SUPER + SHIFT KEYS
@@ -119,6 +111,10 @@ super + shift + Return
 #dmenu
 super + shift + d
 	dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+
+#rofi
+super + d
+    ~/.config/leftwm/launcher/launcher.sh
 
 #reload sxhkd:
 super + shift + s
@@ -162,8 +158,11 @@ ctrl + alt + g
     chromium -no-default-browser-check
 
 #Firefox
+super + shift + f
+     librewolf
+
 ctrl + alt + f
-     firefox
+     librewolf
 
 #Nitrogen
 ctrl + alt + i
@@ -196,14 +195,6 @@ ctrl + alt + r
 #Spotify
 ctrl + alt + s
    spotify
-
-#urxvt
-ctrl + alt + Return
-    urxvt
-
-#urxvt
-ctrl + alt + t
-    urxvt
 
 #Vivaldi
 ctrl + alt + v

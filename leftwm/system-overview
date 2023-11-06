@@ -70,14 +70,14 @@ maximum_width = 240,
 gap_x = 25,--## left | right
 gap_y = 60,--## up | down
 
-alignment = 'top_right',
+alignment = 'top_left',
 --######################  End Window Settings  ###
 --##  Font Settings  #############################
 -- Use Xft (anti-aliased font and stuff)
 use_xft = true,
 --# Requires mono font for spacing reasons
 --xftfont Liberation Mono:bold:size=9
-font = 'Roboto:bold:size=11',
+font = 'Roboto:size=11',
 
 
 -- Alpha of Xft font. Must be a value at or between 1 and 0 ###
@@ -97,28 +97,17 @@ default_outline_color = 'black',
 --default_color 656667 # Waldorf original colour
 --default_color 7a7a7a # Flame  & Bunsen Grey
 --default_color 929292 # Labs Grey
---default_color = '#ffffff',-- PureWhite
---color0 = '#DC143C',-- Crimson
---color1 = '#778899',-- LightSlateGray
---color2 = '#FFFFFF',-- White
---color3 = '#9ACD32',-- YellowGreen
---color4 = '#FFA07A',-- LightSalmon
---color5 = '#dddddd',-- Whiteish
---color6 = '#00BFFF',-- DeepSkyBlue
---color7 = '#5F9EA0',-- CadetBlue
---color8 = '#BDB76B',-- DarkKhaki
---color9 = '#CD5C5C',-- IndianRed
-default_color = '#000000',-- PureWhite
-color0 = '#000000',-- Crimson
-color1 = '#000000',-- LightSlateGray
-color2 = '#000000',-- White
-color3 = '#000000',-- YellowGreen
-color4 = '#000000',-- LightSalmon
-color5 = '#000000',-- Whiteish
-color6 = '#000000',-- DeepSkyBlue
-color7 = '#000000',-- CadetBlue
-color8 = '#000000',-- DarkKhaki
-color9 = '#000000',-- IndianRed
+default_color = '#ffffff',-- PureWhite
+color0 = '#DC143C',-- Crimson
+color1 = '#778899',-- LightSlateGray
+color2 = '#FFFFFF',-- White
+color3 = '#9ACD32',-- YellowGreen
+color4 = '#FFA07A',-- LightSalmon
+color5 = '#dddddd',-- Whiteish
+color6 = '#00BFFF',-- DeepSkyBlue
+color7 = '#5F9EA0',-- CadetBlue
+color8 = '#BDB76B',-- DarkKhaki
+color9 = '#CD5C5C',-- IndianRed
 --######################  End Colour Settings  ###
 --##  Borders Section  ###########################
 draw_borders = false,
