@@ -1,4 +1,4 @@
-function fish_prompt --description 'Write out the prompt'
+function old_fish_prompt
     #git config
     if not set -q __fish_git_prompt_show_informative_status
         set -g __fish_git_prompt_show_informative_status 1
