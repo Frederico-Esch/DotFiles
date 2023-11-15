@@ -75,8 +75,12 @@ super + h
     #alacritty -e htop
 
 #Rofi theme selector
+#super + r
+#    rofi-theme-selector
+
+#reload polybar
 super + r
-    rofi-theme-selector
+    reload_polybar
 
 #Pavucontrol
 super + v
@@ -109,8 +113,10 @@ super + shift + Return
 #	thunar
 
 #dmenu
+#rofi
 super + shift + d
-	dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
+    rofi -show drun
+	#dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'
 
 #rofi
 super + d

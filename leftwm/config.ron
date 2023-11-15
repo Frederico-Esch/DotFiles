@@ -14,7 +14,7 @@
     workspaces: [],
     tags: [
         "",
-        "",
+        " ",
         "",
         "",
         "",
@@ -39,7 +39,6 @@
     keybind: [
         (command: Execute, value: "xfce4-terminal --drop-down", modifier: [], key: "F12"),
         (command: Execute, value: "killall conky", modifier: ["modkey"], key: "c"),
-        (command: Execute, value: "dmenu_run -i -nb \'#191919\' -nf \'#fea63c\' -sb \'#fea63c\' -sf \'#191919\' -fn \'NotoMonoRegular:bold:pixelsize=14\'", modifier: ["modkey", "Shift"], key: "d"),
         (command: Execute, value: "archlinux-logout", modifier: ["modkey"], key: "x"),
         (command: Execute, value: "thunar", modifier: ["modkey", "Shift"], key: "Return"),
         (command: Execute, value: "leftwm-command ToggleFullScreen", modifier: ["modkey"], key: "f"),
@@ -50,6 +49,7 @@
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: CloseWindow, value: "", modifier: ["modkey"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
+	(command: Execute, value: "reload_polybar", modifier: ["modkey"], key: "r"),
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: SwapTags, value: "", modifier: ["modkey"], key: "w"),
         (command: MoveWindowUp, value: "", modifier: ["modkey", "Shift"], key: "k"),

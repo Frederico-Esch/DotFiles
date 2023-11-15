@@ -3,7 +3,6 @@ if status is-interactive
 end
 set fish_greeting ""
 
-
 alias lti="leftwm-theme install"
 alias ltu="leftwm-theme uninstall"
 alias lta="leftwm-theme apply"
@@ -17,3 +16,4 @@ alias wget="wget -c"
 alias grep='grep --color=auto'
 
 alias ll='ls -all'
+
