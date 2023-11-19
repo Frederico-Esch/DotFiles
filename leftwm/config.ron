@@ -49,7 +49,7 @@
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: CloseWindow, value: "", modifier: ["modkey"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
-	(command: Execute, value: "reload_polybar", modifier: ["modkey"], key: "r"),
+        (command: Execute, value: "reload_polybar", modifier: ["modkey"], key: "r"),
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: SwapTags, value: "", modifier: ["modkey"], key: "w"),
         (command: MoveWindowUp, value: "", modifier: ["modkey", "Shift"], key: "k"),
