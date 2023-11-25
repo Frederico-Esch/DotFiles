@@ -24,6 +24,8 @@ blueberry-tray &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 volumeicon &
 conky -c ~/.config/leftwm/system-overview &
+playerctld daemon &
+$SCRIPTPATH/scripts/musiquinha/hook_musiquinha.py &
 #nitrogen --restore &
 #caffeine &
 #vivaldi-stable &
@@ -36,14 +38,14 @@ conky -c ~/.config/leftwm/system-overview &
 #atom &
 
 # Boot picom or compton if it exists
-#if [ -x "$(command -v picom)" ]; then
-#  picom --config $HOME/.config/leftwm/themes/current/picom.conf &> /dev/null &
-#  #picom --config $HOME/.config/leftwm/themes/current/picom.conf --experimental-backends &> /dev/null &
-#  #picom &> /dev/null &
-#  #picom --experimental-backends &> /dev/null &
-#elif [ -x "$(command -v compton)" ]; then
-#  compton --config $HOME/.config/leftwm/themes/current/compton.conf &> /dev/null &
-#fi
+if [ -x "$(command -v picom)" ]; then
+  picom --config $HOME/.config/leftwm/themes/current/picom.conf &> /dev/null &
+  #picom --config $HOME/.config/leftwm/themes/current/picom.conf --experimental-backends &> /dev/null &
+  #picom &> /dev/null &
+  #picom --experimental-backends &> /dev/null &
+elif [ -x "$(command -v compton)" ]; then
+  compton --config $HOME/.config/leftwm/themes/current/compton.conf &> /dev/null &
+fi
 
 # Set the theme.ron config
 leftwm command "LoadTheme $SCRIPTPATH/theme.ron"
