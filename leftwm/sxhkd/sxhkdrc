@@ -222,36 +222,36 @@ ctrl + alt + a
 #################################################################
 
 #Wallpaper trash
-alt + t
-    variety -t
+#alt + t
+#    variety -t
 
 #Wallpaper next
-alt + n
-    variety -n
+#alt + n
+#    variety -n
 
 #Wallpaper previous
-alt + p
-    variety -p
+#alt + p
+#    variety -p
 
 #Wallpaper favorite
-alt + f
-    variety -f
+#alt + f
+#    variety -f
 
 #Wallpaper previous
-alt + Left
-    variety -p
+#alt + Left
+#    variety -p
 
 #Wallpaper next
-alt + Right
-    variety -n
+#alt + Right
+#    variety -n
 
 #Wallpaper toggle-pause
-alt + Up
-    variety --toggle-pause
+#alt + Up
+#    variety --toggle-pause
 
 #Wallpaper resume
-alt + Down
-    variety --resume
+#alt + Down
+#    variety --resume
 
 #Xfce appfinder
 alt + F2
