@@ -30,6 +30,7 @@
     window_rules: [
     ( window_class: "xfce4-notifyd", spawn_floating: true ),
     ( window_class: "spotify", spawn_on_tag: 5 ),
+    ( window_class: "LibreWolf", spawn_on_tag: 2 ),
     ],
     disable_current_tag_swap: true,
     disable_tile_drag: false,
