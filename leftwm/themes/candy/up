@@ -11,8 +11,16 @@ ln -s $SCRIPTPATH/down /tmp/leftwm-theme-down
 # keybindings daemon
 sxhkd -c ~/.config/leftwm/sxhkd/sxhkdrc &
 
+#set keyboard
+kb=$(lsusb | grep 'SHARKOON .* Keyboard')
+if [ ${#kb[0]} -gt 0 ]; then
+    setxkbmap -layout us -option compose:ralt
+else
+    setxkbmap -layout br -option compose:ralt
+fi
+
 #compose key
-setxkbmap -option compose:ralt 
+#setxkbmap -option compose:ralt
 
 # diversity of apps to start
 nm-applet &
