@@ -1,3 +1,3 @@
 #!/bin/fish
 
-playerctl previous
+playerctl previous -p spotify

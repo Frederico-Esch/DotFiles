@@ -15,13 +15,16 @@ def update_polybar_musiquinha():
     run(["polybar-msg", "action", "#musiquinha.hook.0"])
 
 def on_play(player, status, manager):
-    update_polybar_musiquinha()
+    if player.props.player_name == "spotify":
+        update_polybar_musiquinha()
 
 def on_pause(player, status, manager):
-    update_polybar_musiquinha()
+    if player.props.player_name == "spotify":
+        update_polybar_musiquinha()
 
 def on_metadata(player, metadata, manager):
-    update_polybar_musiquinha()
+    if player.props.player_name == "spotify":
+        update_polybar_musiquinha()
 
 def init_player(name):
     if name.name == "spotify":

@@ -2,7 +2,7 @@
 set start "%{T2}"
 
 set play_pause_symbol 
-set song_name (playerctl metadata --format "{{trunc(title, 25)}}" 2> /dev/null)
+set song_name (playerctl metadata --format "{{trunc(title, 25)}}" -p spotify 2> /dev/null)
 if [ $song_name != "" ]
     set song_name (string join " " "%{T0}" $song_name "%{T-}")
 end

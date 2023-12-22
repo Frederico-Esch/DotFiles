@@ -1,9 +1,9 @@
 #!/bin/fish
 
-set player (playerctl status 2> /dev/null)
+set player (playerctl status -p spotify 2> /dev/null)
 
 if test -z "$player"
     spotify &
 end
 
-playerctl play-pause
+playerctl play-pause -p spotify
