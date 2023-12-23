@@ -7,7 +7,7 @@ if [ $song_name != "" ]
     set song_name (string join " " "%{T0}" $song_name "%{T-}")
 end
 
-set status_pp (playerctl status)
+set status_pp (playerctl status -p spotify)
 if [ $status_pp = "Playing" ]
     set play_pause_symbol 
 else if [ $status_pp = "Playing" ]
