@@ -26,6 +26,12 @@
     max_window_width: None,
     layout_mode: Workspace,
     insert_behavior: Bottom,
+    layouts: [
+        "Dwindle",
+        "EvenHorizontal",
+        "EvenVertical",
+        "CenterMainFluid"
+    ],
     scratchpad: [],
     window_rules: [
     ( window_class: "xfce4-notifyd", spawn_floating: true ),
