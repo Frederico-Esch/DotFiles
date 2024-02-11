@@ -8,9 +8,9 @@ function reload_polybar
 
 	leftwm-state -q -n -t $SCRIPTPATH/sizes.liquid | sed -r '/^\s*$/d' | while read -l width x y
 	  set barname "mainbar$index"
-	  set monitor $monitors[(math $index+1)]
-	  set width (math $width - 16 )
+	  set -x monitor $monitors[(math $index+1)]
+	  set -x width (math $width - 16 )
 	  polybar -c $SCRIPTPATH/polybar.config $barname &> /dev/null &; disown
-	  set index index+1
+	  set index (math $index+1 )
   	end
 end
