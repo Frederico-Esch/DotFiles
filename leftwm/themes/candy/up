@@ -33,7 +33,7 @@ blueberry-tray &
 volumeicon &
 conky -c ~/.config/leftwm/system-overview &
 playerctld daemon &
-$SCRIPTPATH/scripts/musiquinha/hook_musiquinha.py &
+$SCRIPTPATH/scripts/musiquinha-reborn/hook/build/musiquinha-reborn &
 #nitrogen --restore &
 #caffeine &
 #vivaldi-stable &
