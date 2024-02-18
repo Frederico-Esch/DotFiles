@@ -19,9 +19,6 @@ else
     setxkbmap -layout br -option compose:ralt
 fi
 
-#compose key
-#setxkbmap -option compose:ralt
-
 # diversity of apps to start
 nm-applet &
 pamac-tray &
