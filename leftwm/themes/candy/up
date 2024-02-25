@@ -14,9 +14,9 @@ sxhkd -c ~/.config/leftwm/sxhkd/sxhkdrc &
 #set keyboard
 kb=$(lsusb | grep 'SHARKOON .* Keyboard')
 if [ ${#kb[0]} -gt 0 ]; then
-    setxkbmap -layout us -option compose:ralt
+    setxkbmap -layout us -variant altgr-intl #-option compose:ralt
 else
-    setxkbmap -layout br -option compose:ralt
+    setxkbmap -layout br -variant altgr-intl #-option compose:ralt
 fi
 
 # diversity of apps to start
