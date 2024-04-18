@@ -16,7 +16,7 @@ kb=$(lsusb | grep 'SHARKOON .* Keyboard')
 if [ ${#kb[0]} -gt 0 ]; then
     setxkbmap -layout us -variant altgr-intl #-option compose:ralt
 else
-    setxkbmap -layout br -variant altgr-intl #-option compose:ralt
+    setxkbmap -layout br -variant nodeadkeys -option compose:ralt
 fi
 
 # diversity of apps to start
@@ -31,6 +31,7 @@ volumeicon &
 conky -c ~/.config/leftwm/system-overview &
 playerctld daemon &
 $SCRIPTPATH/scripts/musiquinha-reborn/hook/build/musiquinha-reborn &
+xss-lock --transfer-sleep-lock -- lock &
 #nitrogen --restore &
 #caffeine &
 #vivaldi-stable &
