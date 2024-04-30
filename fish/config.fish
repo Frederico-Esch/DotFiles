@@ -17,3 +17,6 @@ alias grep='grep --color=auto'
 
 alias ll='ls -all'
 
+set -gx ODIN_ROOT "/usr/lib/odin/"
+set -x DEBUGINFOD_URLS "https://debuginfod.archlinux.org"
+set -x ROSWELL_INSTALL_DIR "/home/fred/.roswell"
