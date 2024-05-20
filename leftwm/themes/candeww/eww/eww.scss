@@ -1,0 +1,237 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  font-family: feather;
+  font-family: Iosevka Term SS04;
+}
+
+//Variables
+
+    //bar
+    $background-color: rgba(15, 15, 23, 0.7);
+
+    $bar-color: #0F0F17;//#383D3D
+    //battery
+    $bat-bg-color: rgba(15, 15, 23, 0.0);
+    $bat-color: #b070ff;
+
+    //mem
+    $mem-bg-color: rgba(15, 15, 23, 0.0);
+    $mem-color: #e0b089;
+
+    //disk
+    $disk-bg-color: rgba(15, 15, 23, 0.0);
+    $disk-color: #00ff00;
+    $disk-full-color: #ff0000;
+
+    //temp
+    $temp-bg-color: rgba(15, 15, 23, 0.0);
+    $temp-color: #ffff00;
+
+    //spotify
+    $spotify-color: #1ED760;
+    $spotify-label: #02F358;
+    $spotify-button: #FFFFFF;
+
+    //separator
+    $sep-color: #3E424F;
+
+    //volume
+    $volume-color: #99bbff;
+
+    //calendar
+    $calendar-background: rgb(25, 15, 53);
+    $calendar-today-background: #352071;
+    $calendar-today: #99bbff;
+    $calendar-other-month: rgb(100, 100, 100);
+
+    //song popup
+    $song-title-color: #8060FF;
+    $song-artist-color: #D060FF; //#D060FF //#FF60FF
+    $song-popup-background: rgba(black, 0.5);
+    $song-accent-color: #60FF80;
+
+    //colors
+    $white: #FFFFFF;
+
+
+
+//Global Styles
+.bar0 {
+  background-color: $background-color;
+  border-radius: 10px;
+  padding-right: 10px;
+}
+
+//Widgets
+.music { margin-left: 10px; }
+.spotify-button:hover { color: $spotify-button; }
+.spotify-label:hover { color: $spotify-label; }
+.spotify-button, .spotify-label {
+    all: unset;
+    color: $spotify-color;
+    font-size: 25px;
+}
+.music-data {
+    font-size: 15px;
+    color: $white;
+}
+
+.date { font-size: 18px; }
+.datetime {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.disk_module { background-color: $disk-bg-color; margin: 8px; }
+.bat_module { background-color: $bat-bg-color; }
+.mem_module { background-color: $mem-bg-color; }
+.temp_module { background-color: $temp-bg-color;}
+.bat_module, .mem_module, .temp_module {
+  border-radius: 16px;
+  margin: 0px 5px;
+}
+
+
+.diskbar { color: $disk-full-color; background-color: $disk-color; }
+.batbar { color: $bat-color; }
+.membar { color: $mem-color;  }
+.batbar, .membar, .tempbar {
+    border-radius: 10px;
+    background-color: $bar-color;
+}
+
+.iconbat { color: $bat-color; }
+.iconmem { color: $mem-color; }
+.icondisk { color: $disk-color; }
+.icontemp {
+    font-size: 15px; //18px
+    margin: 8px;
+}
+.iconbat, .iconmem, .icondisk {
+    font-size: 25px;
+    margin: 8px;
+}
+
+.separ {
+    color: $sep-color;
+    font-weight: bold;
+    font-size: 22px;
+    margin: 0px 3px;
+}
+
+.wifi-data { font-size: 15px; }
+.wifi {
+    font-size: 25px;
+    margin-left: 8px;
+}
+
+.volume-label {
+    font-size: 25px;
+    padding: 0px 10px;
+    color: $volume-color;
+}
+.volume-bar {
+    margin: 0px 5px;
+    trough highlight {
+      min-height: 5px;
+      border-radius: 50px;
+    }
+    trough {
+        background-color: rgba(0,0,0,0);
+    }
+    highlight {
+        color: #FFF;
+        background-color: $volume-color;
+    }
+}
+.workspaces { font-size: 20px; }
+
+//pop ups
+
+.calendar {
+    font-size: 18px;
+    //font-family: JetBrainsMono Nerd Font; font-size: 15px;
+    background-color: $calendar-background;
+    color: $white;
+    border-radius: 20px;
+}
+.calendar:selected {
+    color: $calendar-today;
+    background-color: $calendar-today-background;
+}
+.calendar.header {
+    border-radius: 0px;
+    background-color: $calendar-today-background;
+}
+.calendar.button {
+    border-radius: 0px;
+    font-weight: bold;
+    background-color: $calendar-today-background;
+    color: magenta;
+}
+.calendar.highlight {
+    color: magenta;
+    font-weight: bold;
+}
+.calendar:indeterminate {
+    color: $calendar-other-month;
+}
+
+
+.song-pop {
+    font-size: 18px;
+    background-color: $song-popup-background;
+    border-radius: 20px;
+    color: $song-accent-color;
+}
+.song-title {
+    font-weight: bold;
+    color: $song-title-color;
+}
+.song-artist {
+    color: $song-artist-color;
+}
+.song-cover {
+    background-size: cover;
+    background-position: center;
+    margin: 10px;
+    border-radius: 10px;
+}
+.song-bar {
+    min-height: 10px;
+    min-width: 300px;
+    margin-right: 10px;
+}
+.song-progress {
+    font-size: 15px;
+    min-width: 400px;
+    padding-right: 10px;
+
+    trough highlight {
+        min-height: 10px;
+    }
+    trough {
+        background-color: rgba($song-accent-color, 0.4);
+        border-radius: 10px;
+    }
+    highlight {
+        background: linear-gradient(to right, $song-title-color, $song-artist-color);
+        border-radius: 10px;
+    }
+}
+.song-controls {
+    button {
+        font-size: 23px;
+        margin: 3px;
+    }
+    button:hover {
+        color: white;
+    }
+    box {
+        margin: 2px;
+    }
+
+    .song-on {
+        color: $song-title-color;
+    }
+}

@@ -11,7 +11,10 @@
 (
     modkey: "Mod4",
     mousekey: "Mod4",
-    workspaces: [],
+    workspaces: [
+        ( output: "eDP-1-1", y: 0, x: 0, height: 1080, width: 1920 ),
+        //( output: "HDMI-1", y: 0, x: 1080, height: 1080, width: 1920 ),
+    ],
     tags: [
         "",
         "󰖟",
@@ -32,13 +35,15 @@
         "EvenVertical",
         "CenterMainFluid"
     ],
-    scratchpad: [],
+    scratchpad: [
+        //(name: "Terminal", value: "kitty", x: 0, y: 0, height: 1000, width: 1000)
+    ],
     window_rules: [
     ( window_class: "xfce4-notifyd", spawn_floating: true ),
     ( window_class: "spotify", spawn_on_tag: 5 ),
     ( window_class: "LibreWolf", spawn_on_tag: 2 ),
     ],
-    disable_current_tag_swap: true,
+    disable_current_tag_swap: false,
     disable_tile_drag: false,
     disable_window_snap: true,
     focus_behaviour: Sloppy,
@@ -56,7 +61,8 @@
         (command: Execute, value: "alacritty", modifier: ["Control", "Alt"], key: "Return"),
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
-        (command: Execute, value: "reload_polybar", modifier: ["modkey"], key: "r"),
+        (command: HardReload, value: "", modifier: ["modkey", "Shift"], key: "b"),
+        //(command: Execute, value: "reload_polybar", modifier: ["modkey"], key: "r"),
         (command: MoveToLastWorkspace, value: "", modifier: ["modkey", "Shift"], key: "w"),
         (command: SwapTags, value: "", modifier: ["modkey"], key: "w"),
         (command: MoveWindowUp, value: "", modifier: ["modkey", "Shift"], key: "k"),

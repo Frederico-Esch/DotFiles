@@ -1,0 +1,17 @@
+#!/bin/bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+#set background
+if [ -x "$(command -v feh)" ]; then
+  feh --bg-scale $SCRIPTPATH/down.jpg
+fi
+
+leftwm-command "UnloadTheme"
+
+pkill eww
+pkill picom
+pkill conky
+pkill sxhkd
+pkill volumeicon
+pkill -f 'musiquinha-rebo'

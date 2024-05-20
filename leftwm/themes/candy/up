@@ -21,10 +21,8 @@ fi
 
 # diversity of apps to start
 nm-applet &
-pamac-tray &
 xfce4-power-manager &
 numlockx on &
-blueberry-tray &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 volumeicon &
@@ -32,35 +30,16 @@ conky -c ~/.config/leftwm/system-overview &
 playerctld daemon &
 $SCRIPTPATH/scripts/musiquinha-reborn/hook/build/musiquinha-reborn &
 xss-lock --transfer-sleep-lock -- lock &
-#nitrogen --restore &
-#caffeine &
-#vivaldi-stable &
-#firefox &
-#thunar &
-#dropbox &
+nitrogen --restore &
 #insync start &
-#discord &
-#spotify &
-#atom &
 
 # Boot picom or compton if it exists
 if [ -x "$(command -v picom)" ]; then
   picom --config $HOME/.config/leftwm/themes/current/picom.conf &> /dev/null &
-  #picom --config $HOME/.config/leftwm/themes/current/picom.conf --experimental-backends &> /dev/null &
-  #picom &> /dev/null &
-  #picom --experimental-backends &> /dev/null &
-elif [ -x "$(command -v compton)" ]; then
-  compton --config $HOME/.config/leftwm/themes/current/compton.conf &> /dev/null &
 fi
 
 # Set the theme.ron config
 leftwm command "LoadTheme $SCRIPTPATH/theme.ron"
-
-# Set background
-#if [ -x "$(command -v feh)" ]; then
-#  feh --bg-fill "$SCRIPTPATH"/background.jpg
-#fi
-nitrogen --restore
 
 #mainbar
 index=0

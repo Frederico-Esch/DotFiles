@@ -1,0 +1,249 @@
+;Constants
+(defvar music-open  "update music-show='true'")
+(defvar music-close "update music-show='false'")
+(defvar repeat "playerctl loop")
+(defvar shuffle "playerctl shuffle")
+(defvar next-song "playerctl -p 'spotify' next")
+(defvar play-song "playerctl -p 'spotify' play-pause")
+(defvar prev-song "playerctl -p 'spotify' previous")
+(defvar date-open   "update show-date='true'")
+(defvar date-close  "update show-date='false'")
+(defvar wifi-open "update wifi-show='true'")
+(defvar wifi-close "update wifi-show='false'")
+(defvar volume-open "update volume-show='true'")
+(defvar volume-close "update volume-show='false'")
+(defvar volume-mute "update volume-data=\"$(amixer set Master toggle | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }')\"")
+(defvar calendar-open  "update calendar-show='true'")
+(defvar calendar-close "update calendar-show='false'")
+;Variables
+(defpoll time :interval "10s" "date '+%H:%M'")
+(defpoll date :interval "10h" "date '+%d/%m'")
+(defpoll calendar-date :interval "10h" "date '+%d %Y' | awk '{print \"[ \\\"\" $1 \"\\\", \\\"\" $2 \"\\\"]\"}'")
+(defpoll wifi-data :interval "3s" "nmcli -g NAME,TYPE c | head -n 1 | awk '{split($0, wifi_data, \":\"); split(wifi_data[2], type_data, \"-\"); name = wifi_data[1]; type = type_data[3]; print(\"{\\\"name\\\": \\\"\" name \"\\\", \\\"type\\\": \\\"\" type \"\\\"}\")}'")
+(defpoll volume-data :interval "3s"   "amixer get Master | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }'")
+(deflisten workspaces-data "leftwm-state -w 0 -s '[{% for tag in workspace.tags %}{\"mine\": {{tag.mine}},\"busy\": {{tag.busy}}, \"visible\": {{tag.visible}}}{% unless forloop.last %}, {% endunless %}{% endfor %}]'")
+(deflisten music-data :initial "" "~/.config/leftwm/themes/current/eww/music-data.fish");  | while read -l data; echo $(jshon -s $data 2> /dev/null); end
+(defvar music-show false)
+(defvar song-show false)
+(defvar show-date false)
+(defvar wifi-show false)
+(defvar volume-show false)
+(defvar calendar-show false)
+
+;Bar
+(defwindow bar0
+  :monitor 0
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "98%"
+                      :height "4%"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "4%")
+  (bar))
+
+(defwindow bar1
+  :monitor 1
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "98%"
+                      :height "4%"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "4%")
+  (bar))
+
+;Popups
+
+;Widgets
+(defwidget bar []
+  (centerbox :orientation "h"
+    (left)
+    (workspaces)
+    (right)))
+
+(defwidget right []
+    (box :class "right" :orientation "h" :space-evenly false :halign "end"
+        (volume)
+        (wifi)
+        (sep)
+        (temp)
+        (sep)
+        (mem)
+        (bat)
+        (sep)
+        (datetime)))
+
+(defwidget left []
+    (box :class "left" :orientation "h" :space-evenly false :halign "start"
+        (music)
+        (disk)
+        (disk-text)))
+
+(defwidget workspaces []
+  (box :class "workspaces"
+       :orientation "h"
+       :space-evenly true
+       :halign "center"
+       :spacing 10
+    (button :onclick "wmctrl -s 0" :style {workspaces-data == '' || workspaces-data[0].mine ? "color: lime" : workspaces-data[0].visible ? "color: yellow" : workspaces-data[0].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 1" :style {workspaces-data == '' || workspaces-data[1].mine ? "color: lime" : workspaces-data[1].visible ? "color: yellow" : workspaces-data[1].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 2" :style {workspaces-data == '' || workspaces-data[2].mine ? "color: lime" : workspaces-data[2].visible ? "color: yellow" : workspaces-data[2].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 3" :style {workspaces-data == '' || workspaces-data[3].mine ? "color: lime" : workspaces-data[3].visible ? "color: yellow" : workspaces-data[3].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 4" :style {workspaces-data == '' || workspaces-data[4].mine ? "color: lime" : workspaces-data[4].visible ? "color: yellow" : workspaces-data[4].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")))
+
+;left
+(defwidget music []
+   (eventbox :class {music-data == "" ? "spotify-button" : "spotify-label"}
+             :onclick {music-data != "" ? song-show ? "${EWW_CMD} update song-show='false'; ${EWW_CMD} close song-info" : "${EWW_CMD} update song-show='true'; ${EWW_CMD} open song-info" : "spotify &"}
+             :onhover "${EWW_CMD} ${music-open}" :onhoverlost "${EWW_CMD} ${music-close}"
+      (box :class "music" :orientation "h" :space-evenly false :halign "start" :valign "center" :tooltip {music-data == "" ? "Open Spotify" : ""}
+          " "
+          (revealer :class "music-data" :reveal {music-data != "" && music-data.status != "" && music-show} :transition "slideright"
+            (box :orientation "h" :space-evenly false
+                ;(button :class "song-control" :onclick prev-song "󰙤")
+                ;(button :class "song-control" :onclick play-song {music-data != "" && music-data.status == "Playing" ? "󱖐" : "󱖏"})
+                ;(button :class "song-control" :onclick next-song "󰙢")
+                {music-data != "" ? music-data.display : ""})))))
+
+(defwidget disk []
+    (box :class "disk_module" :orientation "h"
+              :vexpand "false" :hexpand "false"
+              :space-evenly false
+            (circular-progress :class "diskbar"
+                    :value {round(EWW_DISK["/"].used_perc, 0)} :thickness 3 :clockwise false
+                    :halign "start"
+                (button
+                     :class "icondisk"
+                     :tooltip "${round(EWW_DISK["/"].used_perc, 0)}% used from ${round(EWW_DISK["/"].total / 1000000000, 0)}GB"
+                     ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+                 "⏺"))))
+
+(defwidget disk-text []
+    (label :halign "start" :class "disk_text" :text {"${round(EWW_DISK["/"].used_perc, 0)}% of ${round(EWW_DISK["/"].total / 1000000000, 0)}GB"}))
+
+;right
+(defwidget volume []
+    (eventbox :onhover "${EWW_CMD} ${volume-open}" :onhoverlost "${EWW_CMD} ${volume-close}"
+        (box :class "volume-model" :space-evenly false :orientation "h"
+            (button :class "volume-label" :onclick "${EWW_CMD} ${volume-mute}" {volume-data == "" || volume-data.on == "on" ? "󰕾" : "󰖁"})
+            (revealer :class "volume-data" :reveal {volume-show} :transition "slideleft"
+                (scale :class "volume-bar"
+                       :width 100
+                       :orientation "h"
+                       :max 100 :min 0
+                       :onchange "${EWW_CMD} update volume-data=\"$(amixer set Master {}% | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }')\""
+                       :value {volume-data != "" ? volume-data.vol : 0}))))) ;
+
+(defwidget wifi []
+    (eventbox
+        :style {wifi-data == '' || wifi-data.name == 'lo' ? "color: white" : wifi-data.type == 'wireless' ? "color: purple" : "color: blue"}
+        :onrightclick "kitty -e 'nmtui' &"
+        :onhover "${EWW_CMD} ${wifi-open}"
+        :onhoverlost "${EWW_CMD} ${wifi-close}"
+        (box :orientation "h" :space-evenly false  :class "wifi"
+            {wifi-data == '' || wifi-data.name == 'lo' ? "󱚡 " : wifi-data.type == 'wireless' ? "󱚝 " : "󱚣 "}
+            (revealer :class "wifi-data"
+                :reveal wifi-show :transition "slideleft"
+                {wifi-data == '' || wifi-data.name == 'lo'
+                    ? ""
+                    : wifi-data.type == 'wireless' ? "${wifi-data.name}  ": 'Wired 󰈀 '}))))
+
+(defwidget temp []
+    (box :class "temp_module" :vexpand "false" :hexpand "false" :orientation "h"
+        (circular-progress :class "tempbar" :value {EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]} :thickness 4;
+                           :style "color: rgb(255, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-1.73) + 250, 0)}, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-0.63) + 140, 0)})"
+            (button
+                :class "icontemp"
+                :tooltip "CPU Temp ${EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]}°"
+                ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+                {EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]}))))
+
+(defwidget mem []
+    (box :class "mem_module" :vexpand "false" :hexpand "false" :orientation "h"
+        (circular-progress :value {EWW_RAM.used_mem_perc} :class "membar" :thickness 4
+            (button
+                :class "iconmem"
+                :tooltip "using ${round(EWW_RAM.used_mem_perc, 1)}% ram"
+                ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+                "⏺"))))
+
+(defwidget bat []
+    (box :class "bat_module" :vexpand "false" :hexpand "false" :orientation "h"
+        (circular-progress :class "batbar" :value {EWW_BATTERY["BAT1"]["capacity"]} :thickness 4
+            (button
+                :class "iconbat"
+                :tooltip "battery on ${EWW_BATTERY["BAT1"]["capacity"]}%"
+                ;:onclick "$HOME/.config/eww/bar/scripts/pop system"
+                "⏺"))))
+
+(defwidget sep []
+    (box :class "module-2" :vexpand "false" :hexpand "false"
+        (label :class "separ" :text "|")))
+
+(defwidget datetime []
+    (eventbox :onhover "${EWW_CMD} ${date-open}" :onhoverlost "${EWW_CMD} ${date-close}"
+        (box :class "module" :space-evenly false :orientation "h" :spacing 3
+            (label :class "datetime" :text time)
+            (revealer :reveal show-date :transition "slideleft"
+                (box :space-evenly false :orientation "h"
+                    (sep)
+                    (button :class "date"
+                            :onclick {calendar-show ? "${EWW_CMD} ${calendar-close}; ${EWW_CMD} close calendar" : "${EWW_CMD} ${calendar-open}; ${EWW_CMD} open calendar"}
+                        date))))))
+
+; POPUPS
+(defwidget calendar-content []
+    (box :orientation "v"
+        (box :class "calendar-content"
+            (calendar :class "calendar"
+                      :day  {calendar-date != "" ? "${calendar-date[0]}" : 0}
+                      :year {calendar-date != "" ? "${calendar-date[1]}" : 0}))))
+(defwindow calendar
+    :geometry (geometry :x "-1%" :y "4.5%" :anchor "top right"
+                  :width "270px" :height "60px")
+    (calendar-content))
+
+(defwidget song-pop []
+    (box :class "song-pop" :orientation "h" :space-evenly "false" :vexpand "false" :hexpand "false"
+        (box :class "song-cover" :width 200 :style "background-image: url('${music-data != "" ? music-data.cover : ""}');")
+        (box :orientation "v"    :width 400 :space-evenly "true" :vexpand "false" :hexpand "false"
+            (label :halign "center" :class "song-title" :wrap "false" :truncate "true" :text {music-data != "" ? music-data.title : ""})
+            (label :halign "center" :class "song-artist" :wrap "false" :truncate "true" :text {music-data != "" ? music-data.artist : ""})
+            (box :class "song-controls" :orientation "h" :spacing 15 :halign "center" :space-evenly "true" :vexpand "false" :hexpand "true"
+                (box :orientation "h" :hexpand "false" :spacing 10 :halign "end"
+                    (button :class "song-repeat ${music-data != "" ? music-data.repeat == "Playlist" ? "song-on" : "" : ""}" :onclick "${repeat} Playlist" "󰑖")
+                    (button :class "song-repeat ${music-data != "" ? music-data.repeat == "Track" ? "song-on" : "" : ""}" :onclick "${repeat} Track" "󰑘")
+                    (button :class "song-repeat ${music-data != "" ? music-data.repeat == "None" ? "song-on" : "" : ""}" :onclick "${repeat} None" "󰑗")
+                )
+                (box :orientation "h" :hexpand "true" :spacing 10
+                    (button :class "song-prev" :onclick prev-song  "")
+                    (button :class "song-play" :onclick play-song {music-data != "" && music-data.status == "Playing" ? "" : ""})
+                    (button :class "song-next" :onclick next-song "")
+                )
+                (box :orientation "h" :hexpand "false" :spacing 10 :halign "start"
+                    (button :class "song-prev ${music-data != "" ? music-data.shuffle == "true" ? "song-on" : "" : ""}" :onclick "${shuffle} Toggle" "󰒟")
+                )
+            )
+            (box :class "song-progress" :halign "center" :space-evenly "false" :orientation "h"
+                (scale :class "song-bar" :hexpand "true" :onchange "playerctl -p 'spotify' position {}" :min 0 :active "true" :max {music-data != "" ? music-data.length/1000000 : 0} :value {music-data != "" ? music-data.position/1000000 : 0})
+                {music-data != "" ? music-data.duration : ""})))) ;
+
+(defwindow song-info
+    :stacking "fg" :focusable "false"
+    :geometry (geometry :x "1%" :y "5%" :width "600px" :height "200px" :anchor "top left")
+     (song-pop))
+
+;make each bar for each monitor have it's command in the leftwm (ex: leftwm-state -w $i)
+;make the popups open in the correct window (--screen)
+
+
+
+
+
+
+
+
+
+
+
+
+

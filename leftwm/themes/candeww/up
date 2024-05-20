@@ -1,0 +1,53 @@
+#!/bin/bash
+export SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+
+# Down the last running theme
+if [ -f "/tmp/leftwm-theme-down" ]; then
+    /tmp/leftwm-theme-down
+    rm /tmp/leftwm-theme-down
+fi
+ln -s $SCRIPTPATH/down /tmp/leftwm-theme-down
+
+# keybindings daemon
+sxhkd -c ~/.config/leftwm/sxhkd/sxhkdrc &
+
+#set keyboard
+kb=$(lsusb | grep 'SHARKOON .* Keyboard')
+if [ ${#kb[0]} -gt 0 ]; then
+    setxkbmap -layout us -variant altgr-intl #-option compose:ralt
+else
+    setxkbmap -layout br -variant nodeadkeys -option compose:ralt
+fi
+
+
+# diversity of apps to start
+nm-applet &
+xfce4-power-manager &
+numlockx on &
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+/usr/lib/xfce4/notifyd/xfce4-notifyd &
+volumeicon &
+conky -c ~/.config/leftwm/system-overview &
+playerctld daemon &
+$SCRIPTPATH/scripts/musiquinha-reborn/hook/build/musiquinha-reborn &
+xss-lock --transfer-sleep-lock -- lock &
+nitrogen --restore &
+#insync start &
+setbacklight .7
+
+# Boot picom or compton if it exists
+picom -b --config ~/.config/leftwm/themes/current/picom.conf &
+
+# Set the theme.ron config
+leftwm command "LoadTheme $SCRIPTPATH/theme.ron"
+
+#eww bar
+eww daemon -c $SCRIPTPATH/eww
+
+monitors=$(( $(xrandr --listmonitors | head -n 1 | sed 's/[^0-9]*//') - 1 ))
+
+for i in $(seq -s ' ' 0 $monitors) #{0..0} {0..1}
+do
+    eww open bar$i -c $SCRIPTPATH/eww
+done
+eww update user=${whoami} -c $SCRIPTPATH/eww
