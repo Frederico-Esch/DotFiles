@@ -34,9 +34,9 @@
 (defwindow bar0
   :monitor 0
   :geometry (geometry :x "0%"
-                      :y "0%"
+                      :y "0.4%"
                       :width "98%"
-                      :height "4%"
+                      :height "3%"
                       :anchor "top center")
   :reserve (struts :side "top" :distance "4%")
   (bar))

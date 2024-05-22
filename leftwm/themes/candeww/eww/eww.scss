@@ -6,8 +6,9 @@
 
 //Variables
 
+  //colors
     //bar
-    $background-color: rgba(15, 15, 23, 0.7);
+    $background-color: rgba(15, 15, 23, 0.5);
 
     $bar-color: #0F0F17;//#383D3D
     //battery
@@ -50,16 +51,33 @@
     $song-popup-background: rgba(black, 0.5);
     $song-accent-color: #60FF80;
 
-    //colors
+    //general
     $white: #FFFFFF;
 
+  //sizes
+    //bar
+    $bar-border-radius: 10px;
+    $bar-padding-right: 10px;
+
+    //spotify
+    $spotify-font-size: 28px;
+    $music-data-fontsize: 15px;
+
+    //datetime
+    $date-font-size: 16px;
+    $datetime-font-size: 25px;
+
+    //circle-bars
+    $temp-icon-font-size: 13px;
+    $other-icons-font-size: 25px;
+    //preguiça de colocar o resto em variável
 
 
 //Global Styles
 .bar0 {
   background-color: $background-color;
-  border-radius: 10px;
-  padding-right: 10px;
+  border-radius: $bar-border-radius;
+  padding-right: $bar-padding-right;
 }
 
 //Widgets
@@ -69,20 +87,20 @@
 .spotify-button, .spotify-label {
     all: unset;
     color: $spotify-color;
-    font-size: 25px;
+    font-size: $spotify-font-size;
 }
 .music-data {
-    font-size: 15px;
+    font-size: $music-data-fontsize;
     color: $white;
 }
 
-.date { font-size: 18px; }
+.date { font-size: $date-font-size; }
 .datetime {
-    font-size: 23px;
+    font-size: $datetime-font-size;
     font-weight: bold;
 }
 
-.disk_module { background-color: $disk-bg-color; margin: 8px; }
+.disk_module { background-color: $disk-bg-color; margin: 5px 6px; }
 .bat_module { background-color: $bat-bg-color; }
 .mem_module { background-color: $mem-bg-color; }
 .temp_module { background-color: $temp-bg-color;}
@@ -104,12 +122,12 @@
 .iconmem { color: $mem-color; }
 .icondisk { color: $disk-color; }
 .icontemp {
-    font-size: 15px; //18px
+    font-size: $temp-icon-font-size; //18px
     margin: 8px;
 }
 .iconbat, .iconmem, .icondisk {
-    font-size: 25px;
-    margin: 8px;
+    font-size: $other-icons-font-size;
+    margin: 0px 8px;
 }
 
 .separ {
@@ -222,7 +240,9 @@
 .song-controls {
     button {
         font-size: 23px;
-        margin: 3px;
+        //margin: 3px;
+        padding-right: 7px;
+        margin-left: 3px;
     }
     button:hover {
         color: white;
