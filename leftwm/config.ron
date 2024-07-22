@@ -56,6 +56,7 @@
         (command: Execute, value: "archlinux-logout", modifier: ["modkey"], key: "x"),
         (command: Execute, value: "thunar", modifier: ["modkey", "Shift"], key: "Return"),
         (command: Execute, value: "kitty", modifier: ["modkey"], key: "t"),
+        (command: Execute, value: "emacs", modifier: ["modkey"], key: "e"),
         (command: Execute, value: "kitty", modifier: ["modkey"], key: "Return"),
         (command: Execute, value: "alacritty", modifier: ["Control", "Alt"], key: "t"),
         (command: Execute, value: "alacritty", modifier: ["Control", "Alt"], key: "Return"),
