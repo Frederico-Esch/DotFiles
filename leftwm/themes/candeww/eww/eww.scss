@@ -80,6 +80,12 @@
   padding-right: $bar-padding-right;
 }
 
+.bar1 {
+  background-color: $background-color;
+  border-radius: $bar-border-radius;
+  padding-right: $bar-padding-right;
+}
+
 //Widgets
 .music { margin-left: 10px; }
 .spotify-button:hover { color: $spotify-button; }

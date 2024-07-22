@@ -93,7 +93,7 @@
 ;left
 (defwidget music []
    (eventbox :class {music-data == "" ? "spotify-button" : "spotify-label"}
-             :onclick {music-data != "" ? song-show ? "${EWW_CMD} update song-show='false'; ${EWW_CMD} close song-info" : "${EWW_CMD} update song-show='true'; ${EWW_CMD} open song-info" : "spotify &"}
+             :onclick {music-data != "" ? (song-show ? "${EWW_CMD} update song-show='false'; ${EWW_CMD} close song-info" : "${EWW_CMD} update song-show='true'; ${EWW_CMD} open song-info") : "spotify &"}
              :onhover "${EWW_CMD} ${music-open}" :onhoverlost "${EWW_CMD} ${music-close}"
       (box :class "music" :orientation "h" :space-evenly false :halign "start" :valign "center" :tooltip {music-data == "" ? "Open Spotify" : ""}
           " "
