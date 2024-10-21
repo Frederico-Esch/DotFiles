@@ -21,13 +21,13 @@ fi
 
 
 # diversity of apps to start
+# conky -c ~/.config/leftwm/system-overview &
 nm-applet &
 xfce4-power-manager &
 numlockx on &
 /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 volumeicon &
-conky -c ~/.config/leftwm/system-overview &
 playerctld daemon &
 $SCRIPTPATH/scripts/musiquinha-reborn/hook/build/musiquinha-reborn &
 xss-lock --transfer-sleep-lock -- lock &
