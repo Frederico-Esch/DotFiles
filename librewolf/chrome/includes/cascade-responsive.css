@@ -1,7 +1,7 @@
 @media (min-width: 1000px) {
 
 
-  #navigator-toolbox { display: flex; flex-wrap: wrap; flex-direction: row; }
+  #navigator-toolbox { display: flex; flex-wrap: wrap; flex-direction: row-reverse; }
 
 
   #nav-bar {

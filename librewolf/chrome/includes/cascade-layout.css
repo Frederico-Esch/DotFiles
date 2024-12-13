@@ -1,6 +1,8 @@
 :root {
 
+  /*
   --toolbarbutton-border-radius: var(--uc-border-radius) !important;
+  */
   --tab-border-radius: var(--uc-border-radius) !important;
   --arrowpanel-border-radius: var(--uc-border-radius) !important;
 
