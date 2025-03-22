@@ -50,4 +50,4 @@ for i in $(seq -s ' ' 0 $monitors) #{0..0} {0..1}
 do
     eww open bar$i -c $SCRIPTPATH/eww
 done
-eww update user=${whoami} -c $SCRIPTPATH/eww
+#eww update user=${whoami} -c $SCRIPTPATH/eww
