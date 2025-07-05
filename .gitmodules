@@ -1,0 +1,3 @@
+[submodule "PathModifier"]
+	path = PathModifier
+	url = git@github.com:Frederico-Esch/PathModifier.git
