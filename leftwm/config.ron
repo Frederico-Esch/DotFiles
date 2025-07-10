@@ -42,7 +42,7 @@
     ( window_class: "xfce4-notifyd", spawn_floating: true ),
     ( window_class: "alacritty", spawn_floating: true ),
     ( window_class: "spotify", spawn_on_tag: 5 ),
-    ( window_class: "LibreWolf", spawn_on_tag: 2 ),
+    ( window_class: "librewolf", spawn_on_tag: 2 ),
     ],
     disable_current_tag_swap: false,
     disable_tile_drag: false,

@@ -19,8 +19,8 @@
 (defpoll time :interval "10s" "date '+%H:%M'")
 (defpoll date :interval "10h" "date '+%d/%m'")
 (defpoll calendar-date :interval "10h" "date '+%d %Y' | awk '{print \"[ \\\"\" $1 \"\\\", \\\"\" $2 \"\\\"]\"}'")
-(defpoll wifi-data :interval "3s" "nmcli -g NAME,TYPE c | head -n 1 | awk '{split($0, wifi_data, \":\"); split(wifi_data[2], type_data, \"-\"); name = wifi_data[1]; type = type_data[3]; print(\"{\\\"name\\\": \\\"\" name \"\\\", \\\"type\\\": \\\"\" type \"\\\"}\")}'")
-(defpoll volume-data :interval "3s"   "amixer get Master | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }'")
+(defpoll wifi-data :initial "" :interval "3s" "nmcli -g NAME,TYPE c | head -n 1 | awk '{split($0, wifi_data, \":\"); split(wifi_data[2], type_data, \"-\"); name = wifi_data[1]; type = type_data[3]; print(\"{\\\"name\\\": \\\"\" name \"\\\", \\\"type\\\": \\\"\" type \"\\\"}\")}'")
+(defpoll volume-data :initial "volume-data: {\"vol\": 100, \"on\": \"on\" }" :interval "3s" "amixer get Master | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }'")
 (deflisten workspaces-data "leftwm-state -w 0 -s '[{% for tag in workspace.tags %}{\"mine\": {{tag.mine}},\"busy\": {{tag.busy}}, \"visible\": {{tag.visible}}}{% unless forloop.last %}, {% endunless %}{% endfor %}]'")
 (deflisten music-data :initial "" "~/.config/leftwm/themes/current/eww/music-data.fish");  | while read -l data; echo $(jshon -s $data 2> /dev/null); end
 (defvar music-show false)
