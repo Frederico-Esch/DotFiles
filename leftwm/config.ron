@@ -33,7 +33,8 @@
         "Dwindle",
         "MainAndVertStack",
         "CenterMainFluid",
-        "EvenHorizontal"
+        "EvenHorizontal",
+        "Monocle"
     ],
     scratchpad: [
         (name: "Terminal", value: "kitty -o font_size=12", x: 300, y: 170, width: 1320, height: 740)
