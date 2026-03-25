@@ -1,0 +1,81 @@
+* {
+  all: unset; // Unsets everything so you can style everything from scratch
+  //font-family: iosevka-SS04;
+  font-family: ComicCodeLigatures Nerd Font Mono;
+}
+
+.bar {
+  opacity: 1.0;
+  padding: 5px 15px;
+}
+
+.sidestuff {
+  background-color: rgb(15, 15, 23);
+  padding: 1px 10px;
+  border-radius: 15px;
+  font-size: medium;
+
+  * {
+    padding: 0 5px;
+  }
+}
+
+.workspaces, .time {
+  background-color: rgb(15, 15, 23);
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+
+.workspaces button, .power-buttons button {
+  padding: 0px 10px;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  transition: all 0.15s ease-out;
+}
+
+.active-workspace {
+  background-color: #474747;
+  margin: 0 3px;
+  color: red;
+}
+
+.focused-workspace {
+  background-color: #202020;
+  margin: 0 5px;
+  color: lime;
+}
+
+.urgent-workspace {
+  background-color: DarkRed;
+  margin: 0 3px;
+  color: orange;
+}
+
+.volume-bar {
+    margin: 0px 5px;
+    trough highlight {
+      min-height: 5px;
+      border-radius: 50px;
+    }
+    trough {
+      background-color: #000;
+    }
+    highlight {
+        background-color: #aa00ff;
+    }
+}
+
+.time * {
+  padding: 0 10px;
+}
+
+//.power-buttons button {
+//  &:hover {
+//    transition: 200ms linear background-color, border-radius;
+//    background-color: rgba(#3d464e, 0.6);
+//  }
+//}
+
+//.power-buttons .shutdown {
+//  color: rgba(#f87070, 0.8);
+//}

@@ -1,0 +1,294 @@
+;; make spotify thingy
+(defwidget bar []
+  (centerbox 
+    :orientation "h"
+    (left)
+    (workspaces 
+      :active-workspace active-workspace
+      :focused-workspace focused-workspace
+      :urgent-workspace urgent-workspace)
+    (right)))
+
+
+(deflisten active-workspace `$HOME/.config/eww/scripts/getactivews`)
+(deflisten urgent-workspace `$HOME/.config/eww/scripts/geturgentws`)
+;; had to set the initial workspace to "1"
+(deflisten focused-workspace :initial "1" `$HOME/.config/eww/scripts/getfocusedws`)
+
+(defwidget workspaces [active-workspace focused-workspace urgent-workspace]
+  (box
+    :class "workspaces"
+    :orientation "h"
+    :space-evenly false
+    :halign "start"
+    (button
+      :class {
+	arraylength(search(focused-workspace, "1")) > 0 ? "focused-workspace" : 
+	arraylength(search(urgent-workspace, "1")) > 0 ? "urgent-workspace" : 
+      	arraylength(search(active-workspace, "1")) > 0 ? "active-workspace" : 
+      	"regular"
+      }
+      :onclick "i3-msg workspace 1"  "󰹻")
+    (button 
+      :class {
+	arraylength(search(focused-workspace, "2")) > 0 ? "focused-workspace" : 
+	arraylength(search(urgent-workspace, "2")) > 0 ? "urgent-workspace" : 
+	arraylength(search(active-workspace, "2")) > 0 ? "active-workspace" : 
+	"regular"
+      }
+      :onclick "i3-msg workspace 2" "󰹻")
+
+    (button
+      :class {
+	arraylength(search(focused-workspace, "3")) > 0 ? "focused-workspace" : 
+	arraylength(search(urgent-workspace, "3")) > 0 ? "urgent-workspace" : 
+	arraylength(search(active-workspace, "3")) > 0 ? "active-workspace" : 
+	"regular"
+      }
+      :onclick "i3-msg workspace 3" "󰹻")
+
+    (button
+      :class {
+	arraylength(search(focused-workspace, "4")) > 0 ? "focused-workspace" : 
+	arraylength(search(urgent-workspace, "4")) > 0 ? "urgent-workspace" : 
+	arraylength(search(active-workspace, "4")) > 0 ? "active-workspace" : 
+	"regular"
+      }
+      :onclick "i3-msg workspace 4" "󰹻")
+
+    (button
+      :class {
+	arraylength(search(focused-workspace, "5")) > 0 ? "focused-workspace" : 
+	arraylength(search(urgent-workspace, "5")) > 0 ? "urgent-workspace" : 
+	arraylength(search(active-workspace, "5")) > 0 ? "active-workspace" : 
+	"regular"
+      }
+      :onclick "i3-msg workspace 5" "󰹻")
+  )
+)
+
+(defwidget left []
+  (box 
+    :class "sidestuff" 
+    :orientation "h" 
+    :space-evenly false 
+    :halign "start"
+
+    (disk :icon "")
+
+    (ram :icon "󱛟")
+  )
+)
+
+(defwidget right []
+  (box 
+    :class "sidestuff" 
+    :orientation "h" 
+    :space-evenly false 
+    :halign "end"
+
+    (network :netinfo net :offline "󰤭" :excellent "󰤨" :good "󰤥" :okay "󰤢" :slow "󰤟")
+    (audio :high "" :medium "󰖀" :low "󰕿" :muted "󰝟"
+            :volume volume)
+    (cpu_usage :icon "󰍛")
+
+    (temp :icon "")
+
+    (battery :status {EWW_BATTERY.BAT1.status}
+            :capacity {EWW_BATTERY.BAT1.capacity}
+            :charge "󰂄" :full "󰁹" :ninety "󰂂" :eighty "󰂁" :seventy "󰂀" :sixty "󰁿" 
+            :fifty "󰁾"  :fourty "󰁽" :thirty "󰁼" :twenty "󰁻" :eleventy "󱃍")
+
+    (time-date)
+
+    ;(label :text "|")
+
+    ;;systray not working
+    ;(systray 
+    ;  :pack_direction "right"
+    ;  :icon-size 16)
+
+    ;(buttons 
+    ;  :shutdown "systemctl poweroff" 
+    ;  :reboot "systemctl reboot"
+    ;  :logout "i3-msg exit"
+    ;  :suspend "systemctl suspend"
+    ;  :hibernate "systemctl hibernate"
+    ;  :shutdown_icon "⏻" 
+    ;  :reboot_icon "󰑓"
+    ;  :logout_icon "󰿅"
+    ;  :suspend_icon "󰏦"
+    ;  :hibernate_icon "󰜗"
+    ;)
+  )
+)
+
+
+(defwidget cpu_usage [icon]
+  (box  
+    (label :text "${icon} ${round(EWW_CPU.avg, 1)}%")
+  )
+)
+
+
+(defwidget temp [icon]
+  (box  
+    (label
+    	:text "${icon} ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"], 1)}℃"
+    	:style "color: rgb(255, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-1.73) + 250, 0)}, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-0.63) + 140, 0)})"
+    )
+  )
+)
+
+
+(defwidget ram [icon]
+  (box  
+    ;:tooltip "${round(EWW_RAM.used_mem / 1048576, 1)}MiB/${round(EWW_RAM.total_mem / 1048576, 1)}MiB"
+    :tooltip "${round(EWW_RAM.used_mem / 1073741824, 2)}GiB/${round(EWW_RAM.total_mem / 1073741824, 2)}GiB"
+    (label :text "${icon} ${round(EWW_RAM.used_mem_perc, 1)}%")
+  )
+)
+
+
+(defwidget disk [icon]
+  (box 
+    :tooltip {"${round(EWW_DISK["/"].used / 1000000000, 3)}GB of ${round(EWW_DISK["/"].total / 1000000000, 3)}GB"}
+    (label :text "${icon} ${round((EWW_DISK['/'].used_perc), 1)}%")
+  )
+)
+
+
+(defwidget battery [capacity status eleventy twenty thirty fourty
+                    fifty sixty seventy eighty ninety full charge]
+  (box :space-evenly false :spacing 8
+    (label :text {(status == 'Charging' ? charge :
+      capacity < 10 ? eleventy :
+        capacity < 20 ? twenty :
+          capacity < 30 ? thirty :
+            capacity < 40 ? fourty :
+              capacity < 50 ? fifty :
+                capacity < 60 ? sixty :
+                  capacity < 70 ? seventy :
+                    capacity < 80 ? eighty :
+                      capacity < 90 ? ninety : full) + " ${capacity}%"})
+  )
+)
+
+
+(defpoll net :interval "10s"
+  :initial `N/A`
+  `nmcli -t -f SIGNAL,ACTIVE,SSID device wifi | awk -F':' '{if($2=="yes")print "{\\"strength\\": " $1 ", \\"name\\": \\""$3"\\"}"}'`)
+
+(defvar network_rev false)
+(defwidget network [netinfo offline excellent
+                    good okay slow]
+  (eventbox
+    :onhover     "eww update network_rev=true"
+    :onhoverlost "eww update network_rev=false"
+    (box
+      :space-evenly false
+	(label :text {netinfo.strength == "" ? offline :
+	  netinfo.strength < 26 ? slow :
+	    netinfo.strength < 51 ? okay :
+	      netinfo.strength < 76 ? good : excellent})
+	(revealer
+        :transition "slideleft"
+        :reveal network_rev
+        :duration "350ms"
+        (label :text "${netinfo.name}")
+	)
+    )
+  )
+)
+
+
+(defvar vol_rev false)
+(defwidget audio [high medium low muted volume]
+  (eventbox
+    :onhover "eww update vol_rev=true"
+    :onhoverlost "eww update vol_rev=false"
+    (box 
+      :space-evenly false
+      (eventbox 
+	:class "audio"
+	:onclick "amixer set Master toggle"
+	  (label :text {volume < 0? `${muted} Muted` : 
+	    volume < 30 ? `${low} ${volume}%` :
+	      volume < 70 ? `${medium} ${volume}%` : `${high} ${volume}%`})
+	)
+	(revealer
+	  :reveal vol_rev
+	  :transition "slideleft"
+	  (scale :class "volume-bar"
+			   :width 100
+			   :orientation "h"
+			   :max 100 :min 0
+			   :onchange "amixer set Master {}%"
+			   :value {volume}))
+    )
+  )
+)
+
+(defpoll volume :interval "500ms" `$HOME/.config/eww/scripts/getvol`)
+;(deflisten volume :initial `50` `pactl subscribe | grep --line-buffered "sink" | while read -r line; do $HOME/.config/eww/scripts/getvol; done`)
+
+
+
+(defpoll date :interval "1h" :initial "N/A" "date +'%a %d %b %Y'")
+(defpoll time :interval "10s" :initial "N/A" "date +'%H:%M'")
+(defvar time_rev false)
+(defwidget time-date []
+  (eventbox 
+    :class "time"
+    :onhover "eww update time_rev=true"
+    :onhoverlost "eww update time_rev=false"
+    (box :space-evenly "false"
+      (label :text "${time}")
+      (revealer 
+        :transition "slideleft"
+        :reveal time_rev
+        :duration "350ms"
+        (label :text "${date}")
+      )
+    )  
+  )
+)
+
+;(defvar but_rev false)
+;(defwidget buttons [shutdown shutdown_icon 
+;                    reboot reboot_icon 
+;                    logout logout_icon
+;                    suspend suspend_icon
+;                    hibernate hibernate_icon]
+;  (eventbox
+;    :onhover "$HOME/eww/target/release/eww update but_rev=true"
+;    :onhoverlost "$HOME/eww/target/release/eww update but_rev=false"
+;    (box :class "power-buttons"
+;      :space-evenly false
+;      (label :text "|")
+;      (revealer 
+;        :transition "slideright"
+;        :reveal but_rev
+;        :duration "350ms"
+;        (box 
+;          (button :onclick suspend suspend_icon)
+;          (button :onclick hibernate hibernate_icon)
+;          (button :onclick logout logout_icon)
+;          (button :onclick reboot reboot_icon)
+;        )
+;      )
+;      (button :class "shutdown" :onclick shutdown shutdown_icon)
+;    )
+;  )
+;)
+
+(defwindow bar
+  :monitor 0
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0%"
+                      :width "90%"
+                      :height "10px"
+                      :anchor "top center")
+  :reserve (struts :side "top" :distance "4%")
+  (bar))
