@@ -3,66 +3,42 @@
   (centerbox 
     :orientation "h"
     (left)
-    (workspaces 
-      :active-workspace active-workspace
-      :focused-workspace focused-workspace
-      :urgent-workspace urgent-workspace)
+    (workspaces
+      :workspace workspace
+    )
     (right)))
 
 
-(deflisten active-workspace `$HOME/.config/eww/scripts/getactivews`)
-(deflisten urgent-workspace `$HOME/.config/eww/scripts/geturgentws`)
+;;(deflisten active-workspace `$HOME/.config/eww/scripts/getactivews`)
+;;(deflisten urgent-workspace `$HOME/.config/eww/scripts/geturgentws`)
 ;; had to set the initial workspace to "1"
-(deflisten focused-workspace :initial "1" `$HOME/.config/eww/scripts/getfocusedws`)
+;;(deflisten focused-workspace :initial "1" `$HOME/.config/eww/scripts/getfocusedws`)
+(deflisten workspace :initial '{"1": "focused-workspace"}' `$HOME/.config/eww/scripts/getworkspaces`)
 
-(defwidget workspaces [active-workspace focused-workspace urgent-workspace]
+(defwidget workspaces [workspace]
   (box
     :class "workspaces"
     :orientation "h"
     :space-evenly false
     :halign "start"
     (button
-      :class {
-	arraylength(search(focused-workspace, "1")) > 0 ? "focused-workspace" : 
-	arraylength(search(urgent-workspace, "1")) > 0 ? "urgent-workspace" : 
-      	arraylength(search(active-workspace, "1")) > 0 ? "active-workspace" : 
-      	"regular"
-      }
+      :class { workspace?.["1"] ?: "regural" }
       :onclick "i3-msg workspace 1"  "󰹻")
-    (button 
-      :class {
-	arraylength(search(focused-workspace, "2")) > 0 ? "focused-workspace" : 
-	arraylength(search(urgent-workspace, "2")) > 0 ? "urgent-workspace" : 
-	arraylength(search(active-workspace, "2")) > 0 ? "active-workspace" : 
-	"regular"
-      }
+
+    (button
+      :class { workspace?.["2"] ?: "regural" }
       :onclick "i3-msg workspace 2" "󰹻")
 
     (button
-      :class {
-	arraylength(search(focused-workspace, "3")) > 0 ? "focused-workspace" : 
-	arraylength(search(urgent-workspace, "3")) > 0 ? "urgent-workspace" : 
-	arraylength(search(active-workspace, "3")) > 0 ? "active-workspace" : 
-	"regular"
-      }
+      :class { workspace?.["3"] ?: "regural" }
       :onclick "i3-msg workspace 3" "󰹻")
 
     (button
-      :class {
-	arraylength(search(focused-workspace, "4")) > 0 ? "focused-workspace" : 
-	arraylength(search(urgent-workspace, "4")) > 0 ? "urgent-workspace" : 
-	arraylength(search(active-workspace, "4")) > 0 ? "active-workspace" : 
-	"regular"
-      }
+      :class { workspace?.["4"] ?: "regural" }
       :onclick "i3-msg workspace 4" "󰹻")
 
     (button
-      :class {
-	arraylength(search(focused-workspace, "5")) > 0 ? "focused-workspace" : 
-	arraylength(search(urgent-workspace, "5")) > 0 ? "urgent-workspace" : 
-	arraylength(search(active-workspace, "5")) > 0 ? "active-workspace" : 
-	"regular"
-      }
+      :class { workspace?.["5"] ?: "regural" }
       :onclick "i3-msg workspace 5" "󰹻")
   )
 )
@@ -134,8 +110,8 @@
 (defwidget temp [icon]
   (box  
     (label
-    	:text "${icon} ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"], 1)}℃"
-    	:style "color: rgb(255, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-1.73) + 250, 0)}, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-0.63) + 140, 0)})"
+        :text "${icon} ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"], 1)}℃"
+        :style "color: rgb(255, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-1.73) + 250, 0)}, ${round(EWW_TEMPS["CORETEMP_PACKAGE_ID_0"]*(-0.63) + 140, 0)})"
     )
   )
 )
@@ -187,16 +163,16 @@
     :onhoverlost "eww update network_rev=false"
     (box
       :space-evenly false
-	(label :text {netinfo.strength == "" ? offline :
-	  netinfo.strength < 26 ? slow :
-	    netinfo.strength < 51 ? okay :
-	      netinfo.strength < 76 ? good : excellent})
-	(revealer
+    (label :text {netinfo.strength == "" ? offline :
+      netinfo.strength < 26 ? slow :
+        netinfo.strength < 51 ? okay :
+          netinfo.strength < 76 ? good : excellent})
+    (revealer
         :transition "slideleft"
         :reveal network_rev
         :duration "350ms"
         (label :text "${netinfo.name}")
-	)
+    )
     )
   )
 )
@@ -210,21 +186,21 @@
     (box 
       :space-evenly false
       (eventbox 
-	:class "audio"
-	:onclick "amixer set Master toggle"
-	  (label :text {volume < 0? `${muted} Muted` : 
-	    volume < 30 ? `${low} ${volume}%` :
-	      volume < 70 ? `${medium} ${volume}%` : `${high} ${volume}%`})
-	)
-	(revealer
-	  :reveal vol_rev
-	  :transition "slideleft"
-	  (scale :class "volume-bar"
-			   :width 100
-			   :orientation "h"
-			   :max 100 :min 0
-			   :onchange "amixer set Master {}%"
-			   :value {volume}))
+    :class "audio"
+    :onclick "amixer set Master toggle"
+      (label :text {volume < 0? `${muted} Muted` : 
+        volume < 30 ? `${low} ${volume}%` :
+          volume < 70 ? `${medium} ${volume}%` : `${high} ${volume}%`})
+    )
+    (revealer
+      :reveal vol_rev
+      :transition "slideleft"
+      (scale :class "volume-bar"
+               :width 100
+               :orientation "h"
+               :max 100 :min 0
+               :onchange "amixer set Master {}%"
+               :value {volume}))
     )
   )
 )
