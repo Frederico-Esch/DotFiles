@@ -1,4 +1,4 @@
-window-decoration=false
+window-decoration=server
 font-family = "ComicCodeLigatures Nerd Font Mono"
 
 theme = Deep
