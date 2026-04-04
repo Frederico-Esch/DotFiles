@@ -1,0 +1,3 @@
+#!/bin/sh
+setxkbmap -layout br -variant nodeadkeys -option compose:ralt -option caps:swapescape
+#setxkbmap -layout br,apl -variant nodeadkeys,dyalog -option compose:ralt -option caps:swapescape -option grp:switch

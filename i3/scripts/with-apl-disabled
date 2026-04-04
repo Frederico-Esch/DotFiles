@@ -1,0 +1,3 @@
+#!/bin/sh
+setxkbmap -layout br,apl -variant nodeadkeys,dyalog -option compose:ralt -option caps:swapescape -option grp:ctrl_space_toggle
+#setxkbmap -layout br,apl -variant nodeadkeys,dyalog -option compose:ralt -option caps:swapescape -option grp:switch

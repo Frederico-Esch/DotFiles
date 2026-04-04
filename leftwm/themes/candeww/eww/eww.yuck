@@ -21,7 +21,9 @@
 (defpoll calendar-date :interval "10h" "date '+%d %Y' | awk '{print \"[ \\\"\" $1 \"\\\", \\\"\" $2 \"\\\"]\"}'")
 (defpoll wifi-data :initial "" :interval "3s" "nmcli -g NAME,TYPE c | head -n 1 | awk '{split($0, wifi_data, \":\"); split(wifi_data[2], type_data, \"-\"); name = wifi_data[1]; type = type_data[3]; print(\"{\\\"name\\\": \\\"\" name \"\\\", \\\"type\\\": \\\"\" type \"\\\"}\")}'")
 (defpoll volume-data :initial "volume-data: {\"vol\": 100, \"on\": \"on\" }" :interval "3s" "amixer get Master | tail -n 1 | awk -F'[][]' '{ volume = substr($2, 1, length($2)-1); print \"{\\\"vol\\\": \" volume \", \\\"on\\\": \\\"\" $4 \"\\\" }\" }'")
-(deflisten workspaces-data "leftwm-state -w 0 -s '[{% for tag in workspace.tags %}{\"mine\": {{tag.mine}},\"busy\": {{tag.busy}}, \"visible\": {{tag.visible}}}{% unless forloop.last %}, {% endunless %}{% endfor %}]'")
+
+;specific for leftwm
+;(deflisten workspaces-data "leftwm-state -w 0 -s '[{% for tag in workspace.tags %}{\"mine\": {{tag.mine}},\"busy\": {{tag.busy}}, \"visible\": {{tag.visible}}}{% unless forloop.last %}, {% endunless %}{% endfor %}]'")
 (deflisten music-data :initial "" "~/.config/leftwm/themes/current/eww/music-data.fish");  | while read -l data; echo $(jshon -s $data 2> /dev/null); end
 (defvar music-show false)
 (defvar song-show false)
@@ -78,17 +80,30 @@
         (disk)
         (disk-text)))
 
+;workspaces-data doesnt exist outside of leftwm
+;(defwidget workspaces []
+;  (box :class "workspaces"
+;       :orientation "h"
+;       :space-evenly true
+;       :halign "center"
+;       :spacing 10
+;    (button :onclick "wmctrl -s 0" :style {workspaces-data == '' || workspaces-data[0].mine ? "color: lime" : workspaces-data[0].visible ? "color: yellow" : workspaces-data[0].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+;    (button :onclick "wmctrl -s 1" :style {workspaces-data == '' || workspaces-data[1].mine ? "color: lime" : workspaces-data[1].visible ? "color: yellow" : workspaces-data[1].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+;    (button :onclick "wmctrl -s 2" :style {workspaces-data == '' || workspaces-data[2].mine ? "color: lime" : workspaces-data[2].visible ? "color: yellow" : workspaces-data[2].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+;    (button :onclick "wmctrl -s 3" :style {workspaces-data == '' || workspaces-data[3].mine ? "color: lime" : workspaces-data[3].visible ? "color: yellow" : workspaces-data[3].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+;    (button :onclick "wmctrl -s 4" :style {workspaces-data == '' || workspaces-data[4].mine ? "color: lime" : workspaces-data[4].visible ? "color: yellow" : workspaces-data[4].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")))
+
 (defwidget workspaces []
   (box :class "workspaces"
        :orientation "h"
        :space-evenly true
        :halign "center"
        :spacing 10
-    (button :onclick "wmctrl -s 0" :style {workspaces-data == '' || workspaces-data[0].mine ? "color: lime" : workspaces-data[0].visible ? "color: yellow" : workspaces-data[0].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
-    (button :onclick "wmctrl -s 1" :style {workspaces-data == '' || workspaces-data[1].mine ? "color: lime" : workspaces-data[1].visible ? "color: yellow" : workspaces-data[1].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
-    (button :onclick "wmctrl -s 2" :style {workspaces-data == '' || workspaces-data[2].mine ? "color: lime" : workspaces-data[2].visible ? "color: yellow" : workspaces-data[2].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
-    (button :onclick "wmctrl -s 3" :style {workspaces-data == '' || workspaces-data[3].mine ? "color: lime" : workspaces-data[3].visible ? "color: yellow" : workspaces-data[3].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
-    (button :onclick "wmctrl -s 4" :style {workspaces-data == '' || workspaces-data[4].mine ? "color: lime" : workspaces-data[4].visible ? "color: yellow" : workspaces-data[4].busy ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")))
+    (button :onclick "wmctrl -s 0" :style { true ? "color: lime" : true ? "color: yellow" : true ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 1" :style { true ? "color: lime" : true ? "color: yellow" : true ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 2" :style { true ? "color: lime" : true ? "color: yellow" : true ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 3" :style { true ? "color: lime" : true ? "color: yellow" : true ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")
+    (button :onclick "wmctrl -s 4" :style { true ? "color: lime" : true ? "color: yellow" : true ? "color: #FF4444" : "color: #9966ff" } "󰹻 ")))
 
 ;left
 (defwidget music []
